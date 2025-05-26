@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -7,17 +8,13 @@ using System.Threading.Tasks;
 
 namespace TeachingLoadApp.Context
 {
-    public class DbHandler
+    public static class DbHandler
     {
-        private readonly string _connectionString;
-        private DbContext _context;
-
-        public DbHandler()
+        public static DbContext CreateContext()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["TeachingLoadDb"].ConnectionString;
-            _context = new DbContext(_connectionString);
+            string connectionString = ConfigurationManager.ConnectionStrings["TeachingLoadDb"].ConnectionString;
+            var connection = new MySqlConnection(connectionString);
+            return new DbContext(connection);
         }
-
-        public DbContext Context => _context;
     }
 }

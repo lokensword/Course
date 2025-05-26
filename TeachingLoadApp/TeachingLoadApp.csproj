@@ -106,18 +106,44 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\Interfaces\IClassInLoadService.cs" />
+    <Compile Include="BusinessLogic\Interfaces\IClassService.cs" />
+    <Compile Include="BusinessLogic\Interfaces\IFacultyService.cs" />
+    <Compile Include="BusinessLogic\Interfaces\IGroupService.cs" />
+    <Compile Include="BusinessLogic\Interfaces\ILoadService.cs" />
+    <Compile Include="BusinessLogic\Interfaces\ISubjectService.cs" />
+    <Compile Include="BusinessLogic\Interfaces\ITeacherService.cs" />
+    <Compile Include="BusinessLogic\Interfaces\IUserService.cs" />
+    <Compile Include="BusinessLogic\Services\ClassInLoadService.cs" />
+    <Compile Include="BusinessLogic\Services\ClassService.cs" />
+    <Compile Include="BusinessLogic\Services\FacultyService.cs" />
+    <Compile Include="BusinessLogic\Services\GroupService.cs" />
+    <Compile Include="BusinessLogic\Services\LoadService.cs" />
+    <Compile Include="BusinessLogic\Services\SubjectService.cs" />
+    <Compile Include="BusinessLogic\Services\TeacherService.cs" />
+    <Compile Include="BusinessLogic\Services\UserService.cs" />
     <Compile Include="DataAccess\Context\DbContext.cs" />
     <Compile Include="DataAccess\Context\DbHandler.cs" />
+    <Compile Include="DataAccess\Interfaces\IClassInLoadRepository.cs" />
     <Compile Include="DataAccess\Interfaces\IClassRepository.cs" />
     <Compile Include="DataAccess\Interfaces\IfacultyRepository.cs" />
     <Compile Include="DataAccess\Interfaces\IGroupRepository.cs" />
+    <Compile Include="DataAccess\Interfaces\ILoadRepository.cs" />
     <Compile Include="DataAccess\Interfaces\ISubjectRepository.cs" />
     <Compile Include="DataAccess\Interfaces\ITeacherRepository.cs" />
     <Compile Include="DataAccess\Interfaces\IUserRepository.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="DataAccess\Repositories\ClassInLoadRepository.cs" />
+    <Compile Include="DataAccess\Repositories\ClassRepository.cs" />
+    <Compile Include="DataAccess\Repositories\FacultyRepository.cs" />
+    <Compile Include="DataAccess\Repositories\GroupRepository.cs" />
+    <Compile Include="DataAccess\Repositories\LoadRepository.cs" />
+    <Compile Include="DataAccess\Repositories\SubjectRepository.cs" />
+    <Compile Include="DataAccess\Repositories\TeacherRepository.cs" />
+    <Compile Include="DataAccess\Repositories\UserRepository.cs" />
+    <Compile Include="UserInterface\Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="UserInterface\Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\Models\Class.cs" />
@@ -139,6 +165,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserInterface\Forms\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -152,6 +181,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserInterface\Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

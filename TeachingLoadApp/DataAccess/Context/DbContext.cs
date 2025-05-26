@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.Linq;
+using System.Data.Linq.Mapping;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
-using System.Data.Linq;
-using System.Data.Linq.Mapping;
-
 using TeachingLoadApp.Models;
 
 namespace TeachingLoadApp.Context
 {
     public class DbContext : DataContext
     {
-        public DbContext(string connectionString) : base(connectionString) { }
+        public DbContext(IDbConnection connection) : base(connection) { }
 
         public Table<AppUser> Users;
         public Table<Teacher> Teachers;
