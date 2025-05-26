@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TeachingLoadApp
+namespace TeachingLoadApp.UserInterface.Forms
 {
-    public partial class Form1 : Form
+    public partial class AdminForm : Form
     {
-        public Form1()
+        public AdminForm()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿namespace TeachingLoadApp
 {
-    partial class Form1
+    partial class LoginForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -31,6 +31,7 @@
             this.loginTextBox = new System.Windows.Forms.TextBox();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.loginButton = new System.Windows.Forms.Button();
+            this.debugLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // loginTextBox
@@ -55,16 +56,26 @@
             this.loginButton.TabIndex = 2;
             this.loginButton.Text = "Войти";
             this.loginButton.UseVisualStyleBackColor = true;
+            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
-            // Form1
+            // debugLabel
+            // 
+            this.debugLabel.Location = new System.Drawing.Point(522, 41);
+            this.debugLabel.Name = "debugLabel";
+            this.debugLabel.Size = new System.Drawing.Size(169, 107);
+            this.debugLabel.TabIndex = 3;
+            this.debugLabel.Text = "label1";
+            // 
+            // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.debugLabel);
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.loginTextBox);
-            this.Name = "Form1";
+            this.Name = "LoginForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -76,6 +87,7 @@
         private System.Windows.Forms.TextBox loginTextBox;
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Button loginButton;
+        private System.Windows.Forms.Label debugLabel;
     }
 }
 
