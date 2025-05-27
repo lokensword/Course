@@ -14,5 +14,6 @@ namespace TeachingLoadApp.BusinessLogic.Interfaces
         Load GetById(int id);
         int Add(Load load);
         void Delete(int id);
+        IEnumerable<Load> GetAll();
     }
 }

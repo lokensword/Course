@@ -17,6 +17,10 @@ namespace TeachingLoadApp.BusinessLogic.Services
         {
             _loadRepository = loadRepository;
         }
+        public IEnumerable<Load> GetAll()
+        {
+            return _loadRepository.GetAll();
+        }
 
         public IEnumerable<Load> GetByTeacherId(int teacherId)
         {

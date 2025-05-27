@@ -12,6 +12,10 @@ namespace TeachingLoadApp.DataAccess.Repositories
     public class LoadRepository : ILoadRepository
     {
         private readonly DbContext _context;
+        public IEnumerable<Load> GetAll()
+        {
+            return _context.Loads.ToList();
+        }
 
         public LoadRepository(DbContext context)
         {
