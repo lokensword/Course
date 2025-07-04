@@ -11,9 +11,8 @@ namespace TeachingLoadApp.DataAccess.Interfaces
     {
         IEnumerable<Subject> GetAll();
         Subject GetById(int id);
-        Subject GetByName(string name);
-        int GetIdByName(string name);
-        void Add(Subject subject);
+        int Add(Subject subject);
         void Delete(int id);
+        void Update(Subject subject);
     }
 }

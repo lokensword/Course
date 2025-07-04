@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinqToDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,25 +19,29 @@ namespace TeachingLoadApp.DataAccess.Repositories
             _context = context;
         }
 
-        public IEnumerable<ClassInLoad> GetByLoadId(int loadId)
+        public IEnumerable<ClassInLoad> GetAll()
         {
-            return _context.ClassInLoads.Where(cl => cl.LoadId == loadId).ToList();
+            return _context.ClassInLoads.ToList();
         }
 
-        public void Add(ClassInLoad cil)
+        public ClassInLoad GetById(int id)
         {
-            _context.ClassInLoads.InsertOnSubmit(cil);
-            _context.SubmitChanges();
+            return _context.ClassInLoads.FirstOrDefault(c => c.Id == id);
+        }
+
+        public int Add(ClassInLoad classInLoad)
+        {
+            return _context.InsertWithInt32Identity(classInLoad);
         }
 
         public void Delete(int id)
         {
-            var cil = _context.ClassInLoads.FirstOrDefault(cl => cl.Id == id);
-            if (cil != null)
-            {
-                _context.ClassInLoads.DeleteOnSubmit(cil);
-                _context.SubmitChanges();
-            }
+            _context.ClassInLoads.Delete(c => c.Id == id);
+        }
+
+        public IEnumerable<ClassInLoad> GetByLoadId(int loadId)
+        {
+            return _context.ClassInLoads.Where(c => c.LoadId == loadId).ToList();
         }
     }
 }

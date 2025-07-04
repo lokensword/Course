@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinqToDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,41 +29,19 @@ namespace TeachingLoadApp.DataAccess.Repositories
             return _context.Groups.FirstOrDefault(g => g.Id == id);
         }
 
-        public IEnumerable<Group> GetByFacultyId(int facultyId)
+        public int Add(Group group)
         {
-            return _context.Groups.Where(g => g.FacultyId == facultyId).ToList();
+            return _context.InsertWithInt32Identity(group);
         }
 
-        public void Add(Group group)
-        {
-            _context.Groups.InsertOnSubmit(group);
-            _context.SubmitChanges();
-        }
-        // Удаление группы - удаление занятий (конкретных, я бы даже сказал дискретных) группы
         public void Delete(int id)
         {
-            using (var transaction = _context.Connection.BeginTransaction())
-            {
-                _context.Transaction = transaction;
-
-                try
-                {
-                    var classes = _context.Classes.Where(c => c.GroupId == id);
-                    _context.Classes.DeleteAllOnSubmit(classes);
-
-                    var group = _context.Groups.FirstOrDefault(g => g.Id == id);
-                    if (group != null)
-                        _context.Groups.DeleteOnSubmit(group);
-
-                    _context.SubmitChanges();
-                    transaction.Commit();
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
+            _context.Groups.Delete(g => g.Id == id);
         }
+        public void Update(Group group)
+        {
+            _context.Update(group);
+        }
+
     }
 }

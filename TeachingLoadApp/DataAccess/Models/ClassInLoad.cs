@@ -1,22 +1,22 @@
-﻿using System;
+﻿using LinqToDB.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Linq.Mapping;
 
 namespace TeachingLoadApp.Models
 {
     [Table(Name = "class_in_load")]
     public class ClassInLoad
     {
-        [Column(IsPrimaryKey = true, IsDbGenerated = true, Name = "id")]
+        [PrimaryKey, Identity, Column(Name = "id")]
         public int Id { get; set; }
 
-        [Column(Name = "id_class")]
+        [Column(Name = "id_class"), NotNull]
         public int ClassId { get; set; }
 
-        [Column(Name = "id_load")]
+        [Column(Name = "id_load"), NotNull]
         public int LoadId { get; set; }
     }
 }

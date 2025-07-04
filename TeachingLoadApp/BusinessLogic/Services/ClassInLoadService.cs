@@ -18,20 +18,29 @@ namespace TeachingLoadApp.BusinessLogic.Services
             _classInLoadRepository = classInLoadRepository;
         }
 
-        public IEnumerable<ClassInLoad> GetByLoadId(int loadId)
+        public IEnumerable<ClassInLoad> GetAll()
         {
-            return _classInLoadRepository.GetByLoadId(loadId);
+            return _classInLoadRepository.GetAll();
         }
 
-        public int Add(ClassInLoad cil)
+        public ClassInLoad GetById(int id)
         {
-            _classInLoadRepository.Add(cil);
-            return cil.Id;
+            return _classInLoadRepository.GetById(id);
+        }
+
+        public int Add(ClassInLoad classInLoad)
+        {
+            return _classInLoadRepository.Add(classInLoad);
         }
 
         public void Delete(int id)
         {
             _classInLoadRepository.Delete(id);
+        }
+
+        public IEnumerable<ClassInLoad> GetByLoadId(int loadId)
+        {
+            return _classInLoadRepository.GetByLoadId(loadId);
         }
     }
 }

@@ -9,11 +9,12 @@ namespace TeachingLoadApp.DataAccess.Interfaces
 {
     public interface ILoadRepository
     {
-        IEnumerable<Load> GetByTeacherId(int teacherId);
-        IEnumerable<Load> GetBySemester(string semester);
         IEnumerable<Load> GetAll();
         Load GetById(int id);
-        void Add(Load load);
+        int Add(Load load);
         void Delete(int id);
+        IEnumerable<Load> GetByTeacherId(int teacherId);
+        void Update(Load load);
+
     }
 }

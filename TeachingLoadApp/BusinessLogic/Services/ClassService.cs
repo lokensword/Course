@@ -12,10 +12,12 @@ namespace TeachingLoadApp.BusinessLogic.Services
     public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;
+        private readonly IClassInLoadRepository _classInLoadRepository;
 
-        public ClassService(IClassRepository classRepository)
+        public ClassService(IClassRepository classRepository, IClassInLoadRepository classInLoadRepository)
         {
             _classRepository = classRepository;
+            _classInLoadRepository = classInLoadRepository;
         }
 
         public IEnumerable<Class> GetAll()
@@ -30,12 +32,16 @@ namespace TeachingLoadApp.BusinessLogic.Services
 
         public int Add(Class cls)
         {
-            _classRepository.Add(cls);
-            return cls.Id;
+            return _classRepository.Add(cls);
         }
 
         public void Delete(int id)
         {
+            _classInLoadRepository.GetAll()
+                .Where(cil => cil.ClassId == id)
+                .ToList()
+                .ForEach(cil => _classInLoadRepository.Delete(cil.Id));
+
             _classRepository.Delete(id);
         }
     }

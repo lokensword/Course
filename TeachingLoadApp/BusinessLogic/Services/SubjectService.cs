@@ -12,10 +12,12 @@ namespace TeachingLoadApp.BusinessLogic.Services
     public class SubjectService : ISubjectService
     {
         private readonly ISubjectRepository _subjectRepository;
+        private readonly IClassRepository _classRepository;
 
-        public SubjectService(ISubjectRepository subjectRepository)
+        public SubjectService(ISubjectRepository subjectRepository, IClassRepository classRepository)
         {
             _subjectRepository = subjectRepository;
+            _classRepository = classRepository;
         }
 
         public IEnumerable<Subject> GetAll()
@@ -28,25 +30,24 @@ namespace TeachingLoadApp.BusinessLogic.Services
             return _subjectRepository.GetById(id);
         }
 
-        public Subject GetByName(string name)
-        {
-            return _subjectRepository.GetByName(name);
-        }
-
-        public int GetIdByName(string name)
-        {
-            return _subjectRepository.GetIdByName(name);
-        }
-
         public int Add(Subject subject)
         {
-            _subjectRepository.Add(subject);
-            return subject.Id;
+            return _subjectRepository.Add(subject);
         }
 
         public void Delete(int id)
         {
+            _classRepository.GetAll()
+                .Where(c => c.SubjectId == id)
+                .ToList()
+                .ForEach(c => _classRepository.Delete(c.Id));
+
             _subjectRepository.Delete(id);
         }
+        public void Update(Subject subject)
+        {
+            _subjectRepository.Update(subject);
+        }
+
     }
 }

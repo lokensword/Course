@@ -11,8 +11,10 @@ namespace TeachingLoadApp.BusinessLogic.Interfaces
     {
         IEnumerable<Group> GetAll();
         Group GetById(int id);
-        IEnumerable<Group> GetByFacultyId(int facultyId);
         int Add(Group group);
         void Delete(int id);
+        void Update(Group group);
+
     }
 }
+

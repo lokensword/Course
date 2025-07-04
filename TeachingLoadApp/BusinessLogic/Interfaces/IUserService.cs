@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeachingLoadApp.Models;
 
 namespace TeachingLoadApp.BusinessLogic.Interfaces
 {
     public interface IUserService
     {
-        bool Login(string login, string password);
-        bool IsAdmin(string login);
-        int? GetUserId(string login);
-        string GetRole(string login);
+        IEnumerable<AppUser> GetAll();
+        AppUser GetById(int id);
+        int Add(AppUser user);
+        void Delete(int id);
     }
 }

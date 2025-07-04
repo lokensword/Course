@@ -23,28 +23,30 @@ namespace TeachingLoadApp.UserInterface.Forms
         private readonly IClassService _classService;
         private readonly ISubjectService _subjectService;
         private readonly IGroupService _groupService;
-        private int _userId;
-        private int _teacherId;
+        private readonly int _teacherId;
 
-        public TeacherForm(int userId)
+        public TeacherForm( int teacherId, 
+                            ITeacherService teacherService, 
+                            ILoadService loadService, 
+                            IClassInLoadService classInLoadService, 
+                            IClassService classService, 
+                            ISubjectService subjectService, 
+                            IGroupService groupService)
         {
             InitializeComponent();
-            _userId = userId;
-
-            var context = DbHandler.CreateContext();
-            _teacherService = new TeacherService(new TeacherRepository(context));
-            _loadService = new LoadService(new LoadRepository(context));
-            _classInLoadService = new ClassInLoadService(new ClassInLoadRepository(context));
-            _classService = new ClassService(new ClassRepository(context));
-            _subjectService = new SubjectService(new SubjectRepository(context));
-            _groupService = new GroupService(new GroupRepository(context));
+            _teacherService = teacherService;
+            _loadService = loadService;
+            _classInLoadService = classInLoadService;
+            _classService = classService;
+            _subjectService = subjectService;
+            _groupService = groupService;
+            _teacherId = teacherId;
 
             LoadTeacher();
         }
         private void LoadTeacher()
         {
-            var teacher = _teacherService.GetByUserId(_userId);
-            _teacherId = teacher.Id;
+            var teacher = _teacherService.GetById(_teacherId);
             teacherNameLabel.Text = $"Преподаватель: {teacher.LastName} {teacher.FirstName[0]}. {teacher.MiddleName[0]}.";
             semesterComboBox.SelectedIndex = 0; // триггерит загрузку нагрузки
         }
@@ -54,7 +56,7 @@ namespace TeachingLoadApp.UserInterface.Forms
             string semester = semesterComboBox.SelectedItem.ToString();
 
             var loads = _loadService.GetByTeacherId(_teacherId)
-                                    .Where(l => l.Semestr == semester)ы
+                                    .Where(l => l.Semestr == semester)
                                     .ToList();
 
             var rows = new List<object>();
@@ -82,6 +84,11 @@ namespace TeachingLoadApp.UserInterface.Forms
             }
 
             loadGridView.DataSource = rows;
+        }
+
+        private void TeacherForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

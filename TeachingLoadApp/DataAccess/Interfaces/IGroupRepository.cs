@@ -11,8 +11,9 @@ namespace TeachingLoadApp.DataAccess.Interfaces
     {
         IEnumerable<Group> GetAll();
         Group GetById(int id);
-        IEnumerable<Group> GetByFacultyId(int facultyId);
-        void Add(Group group);
+        int Add(Group group);
         void Delete(int id);
+        void Update(Group group);
+
     }
 }

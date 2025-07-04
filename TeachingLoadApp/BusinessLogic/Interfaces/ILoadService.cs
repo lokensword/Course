@@ -9,11 +9,12 @@ namespace TeachingLoadApp.BusinessLogic.Interfaces
 {
     public interface ILoadService
     {
-        IEnumerable<Load> GetByTeacherId(int teacherId);
-        IEnumerable<Load> GetBySemester(string semester);
+        IEnumerable<Load> GetAll();
         Load GetById(int id);
         int Add(Load load);
         void Delete(int id);
-        IEnumerable<Load> GetAll();
+        IEnumerable<Load> GetByTeacherId(int teacherId);
+        void Update(Load load);
+
     }
 }

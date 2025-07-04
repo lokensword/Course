@@ -12,10 +12,12 @@ namespace TeachingLoadApp.BusinessLogic.Services
     public class GroupService : IGroupService
     {
         private readonly IGroupRepository _groupRepository;
+        private readonly IClassRepository _classRepository;
 
-        public GroupService(IGroupRepository groupRepository)
+        public GroupService(IGroupRepository groupRepository, IClassRepository classRepository)
         {
             _groupRepository = groupRepository;
+            _classRepository = classRepository;
         }
 
         public IEnumerable<Group> GetAll()
@@ -28,20 +30,24 @@ namespace TeachingLoadApp.BusinessLogic.Services
             return _groupRepository.GetById(id);
         }
 
-        public IEnumerable<Group> GetByFacultyId(int facultyId)
-        {
-            return _groupRepository.GetByFacultyId(facultyId);
-        }
-
         public int Add(Group group)
         {
-            _groupRepository.Add(group);
-            return group.Id;
+            return _groupRepository.Add(group);
         }
 
         public void Delete(int id)
         {
+            _classRepository.GetAll()
+                .Where(c => c.GroupId == id)
+                .ToList()
+                .ForEach(c => _classRepository.Delete(c.Id));
+
             _groupRepository.Delete(id);
         }
+        public void Update(Group group)
+        {
+            _groupRepository.Update(group);
+        }
+
     }
 }

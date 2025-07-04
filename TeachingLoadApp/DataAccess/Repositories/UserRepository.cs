@@ -1,10 +1,12 @@
-﻿using System;
+﻿using LinqToDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeachingLoadApp.Context;
 using TeachingLoadApp.DataAccess.Interfaces;
+using TeachingLoadApp.Models;
 
 namespace TeachingLoadApp.DataAccess.Repositories
 {
@@ -17,28 +19,24 @@ namespace TeachingLoadApp.DataAccess.Repositories
             _context = context;
         }
 
-        public bool Authenticate(string login, string password)
+        public IEnumerable<AppUser> GetAll()
         {
-            return _context.Users.Any(u => u.Login == login && u.Password == password);
+            return _context.Users.ToList();
         }
 
-        public bool IsAdmin(string login)
+        public AppUser GetById(int id)
         {
-            return _context.Users.Any(u => u.Login == login && u.Role == "admin");
+            return _context.Users.FirstOrDefault(u => u.Id == id);
         }
 
-        public int? GetUserId(string login)
+        public int Add(AppUser user)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Login == login);
-            return user?.Id;
+            return _context.InsertWithInt32Identity(user);
         }
 
-        public string GetRole(string login)
+        public void Delete(int id)
         {
-            return _context.Users
-                .Where(u => u.Login == login)
-                .Select(u => u.Role)
-                .FirstOrDefault();
+            _context.Users.Delete(u => u.Id == id);
         }
     }
 }

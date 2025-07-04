@@ -9,8 +9,10 @@ namespace TeachingLoadApp.DataAccess.Interfaces
 {
     public interface IClassInLoadRepository
     {
-        IEnumerable<ClassInLoad> GetByLoadId(int loadId);
-        void Add(ClassInLoad cil);
+        IEnumerable<ClassInLoad> GetAll();
+        ClassInLoad GetById(int id);
+        int Add(ClassInLoad classInLoad);
         void Delete(int id);
+        IEnumerable<ClassInLoad> GetByLoadId(int loadId);
     }
 }

@@ -12,10 +12,16 @@ namespace TeachingLoadApp.BusinessLogic.Services
     public class TeacherService : ITeacherService
     {
         private readonly ITeacherRepository _teacherRepository;
+        private readonly ILoadRepository _loadRepository;
+        private readonly IClassInLoadRepository _classInLoadRepository;
 
-        public TeacherService(ITeacherRepository teacherRepository)
+        public TeacherService(  ITeacherRepository teacherRepository,
+                                ILoadRepository loadRepository,
+                                IClassInLoadRepository classInLoadRepository)
         {
             _teacherRepository = teacherRepository;
+            _loadRepository = loadRepository;
+            _classInLoadRepository = classInLoadRepository;
         }
 
         public IEnumerable<Teacher> GetAll()
@@ -28,20 +34,34 @@ namespace TeachingLoadApp.BusinessLogic.Services
             return _teacherRepository.GetById(id);
         }
 
-        public Teacher GetByUserId(int userId)
-        {
-            return _teacherRepository.GetByUserId(userId);
-        }
-
         public int Add(Teacher teacher)
         {
-            _teacherRepository.Add(teacher);
-            return teacher.Id;
+            return _teacherRepository.Add(teacher);
         }
 
         public void Delete(int id)
         {
+            var loads = _loadRepository.GetByTeacherId(id);
+
+            foreach (var load in loads)
+            {
+                _classInLoadRepository.GetByLoadId(load.Id)
+                    .ToList()
+                    .ForEach(cil => _classInLoadRepository.Delete(cil.Id));
+
+                _loadRepository.Delete(load.Id);
+            }
+
             _teacherRepository.Delete(id);
+        }
+
+        public Teacher GetByUserId(int userId)
+        {
+            return _teacherRepository.GetByUserId(userId);
+        }
+        public void Update(Teacher teacher)
+        {
+            _teacherRepository.Update(teacher);
         }
     }
 }

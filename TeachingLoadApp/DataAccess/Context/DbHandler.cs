@@ -13,8 +13,7 @@ namespace TeachingLoadApp.Context
         public static DbContext CreateContext()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["TeachingLoadDb"].ConnectionString;
-            var connection = new MySqlConnection(connectionString);
-            return new DbContext(connection);
+            return new DbContext(connectionString);
         }
     }
 }

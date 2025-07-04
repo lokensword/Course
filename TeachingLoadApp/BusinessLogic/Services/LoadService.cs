@@ -12,24 +12,17 @@ namespace TeachingLoadApp.BusinessLogic.Services
     public class LoadService : ILoadService
     {
         private readonly ILoadRepository _loadRepository;
+        private readonly IClassInLoadRepository _classInLoadRepository;
 
-        public LoadService(ILoadRepository loadRepository)
+        public LoadService(ILoadRepository loadRepository, IClassInLoadRepository classInLoadRepository)
         {
             _loadRepository = loadRepository;
+            _classInLoadRepository = classInLoadRepository;
         }
+
         public IEnumerable<Load> GetAll()
         {
             return _loadRepository.GetAll();
-        }
-
-        public IEnumerable<Load> GetByTeacherId(int teacherId)
-        {
-            return _loadRepository.GetByTeacherId(teacherId);
-        }
-
-        public IEnumerable<Load> GetBySemester(string semester)
-        {
-            return _loadRepository.GetBySemester(semester);
         }
 
         public Load GetById(int id)
@@ -39,13 +32,26 @@ namespace TeachingLoadApp.BusinessLogic.Services
 
         public int Add(Load load)
         {
-            _loadRepository.Add(load);
-            return load.Id;
+            return _loadRepository.Add(load);
         }
 
         public void Delete(int id)
         {
+            _classInLoadRepository.GetByLoadId(id)
+                .ToList()
+                .ForEach(cil => _classInLoadRepository.Delete(cil.Id));
+
             _loadRepository.Delete(id);
         }
+
+        public IEnumerable<Load> GetByTeacherId(int teacherId)
+        {
+            return _loadRepository.GetByTeacherId(teacherId);
+        }
+        public void Update(Load load)
+        {
+            _loadRepository.Update(load);
+        }
+
     }
 }

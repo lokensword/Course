@@ -1,28 +1,33 @@
-﻿using System;
+﻿using LinqToDB.Data;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Data.Linq;
-using System.Data.Linq.Mapping;
-using System.Linq;
+using LinqToDB.Mapping;
 using System.Text;
 using System.Threading.Tasks;
 using TeachingLoadApp.Models;
+using LinqToDB;
 
 namespace TeachingLoadApp.Context
 {
-    public class DbContext : DataContext
+    public class DbContext : DataConnection
     {
-        public DbContext(IDbConnection connection) : base(connection) { }
+        public DbContext(string connectionString)
+            : base("MySql.Data.MySqlClient", connectionString)
+        {
+        }
 
-        public Table<AppUser> Users;
-        public Table<Teacher> Teachers;
-        public Table<Faculty> Faculties;
-        public Table<Group> Groups;
-        public Table<Subject> Subjects;
-        public Table<Class> Classes;
-        public Table<Load> Loads;
-        public Table<ClassInLoad> ClassInLoads;
+        public ITable<AppUser> Users => this.GetTable<AppUser>();
+        public ITable<Teacher> Teachers => this.GetTable<Teacher>();
+        public ITable<Faculty> Faculties => this.GetTable<Faculty>();
+        public ITable<Group> Groups => this.GetTable<Group>();
+        public ITable<Subject> Subjects => this.GetTable<Subject>();
+        public ITable<Class> Classes => this.GetTable<Class>();
+        public ITable<Load> Loads => this.GetTable<Load>();
+        public ITable<ClassInLoad> ClassInLoads => this.GetTable<ClassInLoad>();
     }
-
 }
+
+
+

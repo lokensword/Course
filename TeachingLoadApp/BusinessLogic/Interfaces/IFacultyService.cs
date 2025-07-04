@@ -13,5 +13,7 @@ namespace TeachingLoadApp.BusinessLogic.Interfaces
         Faculty GetById(int id);
         int Add(Faculty faculty);
         void Delete(int id);
+        void Update(Faculty faculty);
+
     }
 }

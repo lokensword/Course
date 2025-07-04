@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinqToDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,47 +29,18 @@ namespace TeachingLoadApp.DataAccess.Repositories
             return _context.Subjects.FirstOrDefault(s => s.Id == id);
         }
 
-        public Subject GetByName(string name)
+        public int Add(Subject subject)
         {
-            return _context.Subjects.FirstOrDefault(s => s.Name == name);
+            return _context.InsertWithInt32Identity(subject);
         }
 
-        public int GetIdByName(string name)
-        {
-            var subject = _context.Subjects.FirstOrDefault(s => s.Name == name);
-            return subject?.Id ?? -1;
-        }
-
-        public void Add(Subject subject)
-        {
-            _context.Subjects.InsertOnSubmit(subject);
-            _context.SubmitChanges();
-        }
-       // Тоже каскадное удаление предмет-занятия
         public void Delete(int id)
         {
-            using (var transaction = _context.Connection.BeginTransaction())
-            {
-                _context.Transaction = transaction;
-
-                try
-                {
-                    var classes = _context.Classes.Where(c => c.SubjectId == id);
-                    _context.Classes.DeleteAllOnSubmit(classes);
-
-                    var subject = _context.Subjects.FirstOrDefault(s => s.Id == id);
-                    if (subject != null)
-                        _context.Subjects.DeleteOnSubmit(subject);
-
-                    _context.SubmitChanges();
-                    transaction.Commit();
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
+            _context.Subjects.Delete(s => s.Id == id);
+        }
+        public void Update(Subject subject)
+        {
+            _context.Update(subject);
         }
     }
 }

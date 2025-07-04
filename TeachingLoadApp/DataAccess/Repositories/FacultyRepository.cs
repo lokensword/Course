@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinqToDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,20 +29,19 @@ namespace TeachingLoadApp.DataAccess.Repositories
             return _context.Faculties.FirstOrDefault(f => f.Id == id);
         }
 
-        public void Add(Faculty faculty)
+        public int Add(Faculty faculty)
         {
-            _context.Faculties.InsertOnSubmit(faculty);
-            _context.SubmitChanges();
+            return _context.InsertWithInt32Identity(faculty);
         }
 
         public void Delete(int id)
         {
-            var faculty = _context.Faculties.FirstOrDefault(f => f.Id == id);
-            if (faculty != null)
-            {
-                _context.Faculties.DeleteOnSubmit(faculty);
-                _context.SubmitChanges();
-            }
+            _context.Faculties.Delete(f => f.Id == id);
         }
+        public void Update(Faculty faculty)
+        {
+            _context.Update(faculty);
+        }
+
     }
 }

@@ -11,8 +11,9 @@ namespace TeachingLoadApp.DataAccess.Interfaces
     {
         IEnumerable<Teacher> GetAll();
         Teacher GetById(int id);
-        Teacher GetByUserId(int userId);
-        void Add(Teacher teacher);
+        int Add(Teacher teacher);
         void Delete(int id);
+        Teacher GetByUserId(int userId);
+        void Update(Teacher teacher);
     }
 }
